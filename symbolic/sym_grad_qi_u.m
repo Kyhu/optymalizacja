@@ -40,6 +40,6 @@ dQ1 = -diff(H, a1)
 dQ2 = -diff(H, a2)
 dQ3 = -diff(H, a3)
 
-pretty(dQ1);
-pretty(dQ2);
-pretty(dQ3);
+% pretty(dQ1);
+% pretty(dQ2);
+% pretty(dQ3);

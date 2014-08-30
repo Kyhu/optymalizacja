@@ -39,19 +39,19 @@ f7 = sqrt(a1^2 + a2^2 + a3^2);
 
 H = psi1 * f1 + psi2 * f2 + psi3*f3 + psi4*f4 + psi5*f5 + psi6*f6 + psi7*f7
 
-dpsi1 = -diff(H, x1);
-dpsi2 = -diff(H, x2);
-dpsi3 = -diff(H, x3);
-dpsi4 = -diff(H, x4);
-dpsi5 = -diff(H, x5);
-dpsi6 = -diff(H, x6);
-dpsi7 = -diff(H, x7);
+dpsi1 = -diff(H, x1)
+dpsi2 = -diff(H, x2)
+dpsi3 = -diff(H, x3)
+dpsi4 = -diff(H, x4)
+dpsi5 = -diff(H, x5)
+dpsi6 = -diff(H, x6)
+dpsi7 = -diff(H, x7)
 
 
-pretty(dpsi1);
-pretty(dpsi2);
-pretty(dpsi3);
-pretty(dpsi4);
-pretty(dpsi5);
-pretty(dpsi6);
-pretty(dpsi7);
+% pretty(dpsi1);
+% pretty(dpsi2);
+% pretty(dpsi3);
+% pretty(dpsi4);
+% pretty(dpsi5);
+% pretty(dpsi6);
+% pretty(dpsi7);

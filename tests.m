@@ -1,4 +1,4 @@
-close all;
+clear_all_not_bp;
 
 path('BFGS/', path); % sciezka do BFGSa
 path('line_search/', path); % sciezka do line searcha
@@ -19,7 +19,7 @@ load_constants;
 
 
 %% Test samego line_searcha (mimum tych funkcji to 2 i 3 ale prosta nie przechodzi dokladnie przez ten punkt));
-% x0 = [7 10]'; % punkt startowy
+% x0 = [6 7]'; % punkt startowy
 % sd = [1 1]' - x0; % kierunek poszukiwania
 % T = 1; % nie uzywamy, ale bedzie potrzebne przy innych zadaniach (?)
 % f0 = obj_fun(0,x0,sd,T); % wartosc funkcji celu w punkcie poczatkowym
@@ -32,9 +32,9 @@ load_constants;
 % fopt % wartosc funkcji po minimalizacji kierunkowej
 
 %% Test BFGSa i line searcha (mimum tych funkcji to 2 i 3);
-% BFGS([-10; 15605], @obj_fun, @obj_fun_grad)
+%BFGS([35;12], @obj_fun, @obj_fun_grad) % Sprawdzic maxstep!
 
-% Calkowanie wstecz - trzeba tez odkomentowac rk4 i appro - cos w tym nie dziala
+%% Calkowanie wstecz - trzeba tez odkomentowac rk4 i appro - cos w tym nie dziala
 % x = flipud(x); % Obrócenie x bo będziemy calkować w tym.
 % psiT = [-2*x(1,1),-2*x(1,2),-2*x(1,3),-2*x(1,4),-2*x(1,5),-2*x(1,6),-1]; %poczoatkowe/koncowe psi
 % [psit,psi] = appr([tn t0], x', psiT, @psi_rhs_SRV, 1);   % Czas obrocony
@@ -43,21 +43,23 @@ load_constants;
 % plot(flipud(psit),psi); 
 
 %% Test funkcji przelaczajacej
-% Tau = [2,5,7,36,46; 7,2,8,15,1; 15,16,4,12,45];
-% [t,u] = switch_fun(Tau);
+% Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
+% [t,u] = Tau2u(Tau);
 % plot(t,u);
 
 %% Test qi_tau
-% Tau = [25;25;25];
+% Tau = [1:49;1:49;1:49];
 % qi_tau(Tau)
 
-%% Test qi_tau 2
-Tau = [0.1,2];
-qi_tau(Tau)
-
 %% Test qi_tau_grad
-% Tau = [2,5,7,36,46; 7,2,8,15,1; 15,16,4,12,45];
+% Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
 % qi_tau_grad(Tau)
 
+%% Test remove_pins
+% Tau = [2,5,7,36, 36.03,46; 7,10,22,22,37,40; 15,16,16.04,24,32,45];
+% remove_pins(Tau)
 
+%% Test generate_switch
+% Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
+% generate_switch(Tau)
 
