@@ -1,4 +1,4 @@
-function [Tau] = generate_switch(Tau)
+function [new_Tau] = generate_switch(Tau)
 
 global phi;
 
@@ -8,13 +8,13 @@ global phi;
 phi = strech_vector(phi, length(t));
 q = u.*phi;
 
-new_Tau = zeros(size(Tau,1),size(Tau,2)+1);
+new_Tau = zeros(size(Tau,1),size(Tau,2)+2);
 
 for i = 1: size(Tau,1)    
     
     %minimum u.*phi
-    [~,min_idx] = min(q(i,:));    
+    [~,min_idx] = min(q(:,i));    
     new_switch_time = t(min_idx);
 
-    new_Tau(i,:) =  sort([Tau(i,:), new_switch_time]);    
+    new_Tau(i,:) =  sort([Tau(i,:), new_switch_time, new_switch_time+0.01]);    
 end

@@ -7,14 +7,17 @@ path('utils/', path);           % sciezka do pomocnych narzedzi
 clear_all_but_bp;   % Czyści i zamyka wszystko oprócz breakpointow
 load_constants;     % Laduje parametry i zmienne globalne
 
-global phi;
-Tau = [25;30;25];     % Poczatkowe przelaczenie
+Tau = [25;25;25];    % Poczatkowe przelaczenie
 
+n = 0;
 STOP_COND = 0;
 while(~STOP_COND)
-    
+    n = n + 1
     %% BFGS
-    [Tau,q] = BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
+    
+    Tau_vec = reshape(Tau,[],1);
+    [Tau_vec,q] = BFGS(Tau_vec, @qi_tau_wrapper, @qi_tau_grad);
+    Tau = reshape(Tau_vec,3,[])
     
     plot_uphi(Tau);
     
@@ -25,12 +28,14 @@ while(~STOP_COND)
     % Jesli Tau(n+1) == Tau(n) == Tau(n-1)(Z jakimś przyblizeniem) to
     % zamienic na jedno przelacenie itp
     
-    %remove_pins(Tau)
+    Tau = remove_pins(Tau)
     
     % Tworzenie szpilek w miejscach gdzie phi*u jest najmniejsze    
-    %generate_pins(Tau)
+    Tau = generate_switch(Tau)
+    plot_uphi(Tau);
     
-    
-    STOP_COND = 1;
+    if(n > 3) 
+        STOP_COND = 1;
+    end
 end
 

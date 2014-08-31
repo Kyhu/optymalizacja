@@ -3,7 +3,7 @@ function [ q ] = qi_tau_wrapper(s,x0,sd,T)
 %dostarczonej metody szukania na kierunku
 
 x=x0+s*sd;
-q = qi_tau(x);
-
+Tau = reshape(x,3,[]);
+q = qi_tau(Tau);
 end
 

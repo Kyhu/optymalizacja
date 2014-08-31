@@ -1,4 +1,4 @@
-function dq = qi_tau_grad(Tau)
+function dq = qi_tau_grad(Tau_vec)
 %%Gradient funkcji jakosci po zmiennych decyzyjnych (czyli czasach
 % przelaczen)
 % Wzor na gradient : phi*df/du * delta_u;
@@ -6,6 +6,8 @@ function dq = qi_tau_grad(Tau)
 % df/du - pochodna funkcji rhs po sterowaniu
 % delta_u - roznica miedzy wartosciami nowego sterowaniem a starego
 % Na końcu zwracamy wartosc gradientu w punktach przelaczen
+
+Tau = reshape(Tau_vec,3,[]);
 
 % Stale i zmienne globalne
 global psi psit phi u0;
@@ -28,7 +30,7 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
 end
 
 %% Wyliczenie pochodnych na calej osi
-grad = phi*delta_u;
+grad = -phi*delta_u;
 
 %% Znalezienie Tau w wektorach czasu
 dq = zeros(size(Tau));
@@ -42,6 +44,6 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
     end
 end
 
-%% Wynik
-dq;
+%% Wynik - do wektora
+dq = reshape(dq,[],1);
 

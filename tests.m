@@ -36,8 +36,10 @@ load_constants;
 %% Test BFGSa i line searcha (mimum tych funkcji to 2 i 3);
 % BFGS([35;12], @obj_fun, @obj_fun_grad)
 
-Tau = [20;30;35];
-BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
+Tau = [20 25;30 35 ;35 40];
+Tau_vec = reshape(Tau,[],1);
+Tau_vec = BFGS(Tau_vec, @qi_tau_wrapper, @qi_tau_grad);
+Tau = reshape(Tau_vec,3,[])
 
 %% Test calkowanie wstecz
 % Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];

@@ -30,7 +30,7 @@ F = 2000;
 
 % Liczba punktow czasowych miedzy 0 a T
 global nt;
-nt = 1000;
+nt = 2000;
 
 % Poczatkowy stan obiektu
 global x0;

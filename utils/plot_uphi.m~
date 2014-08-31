@@ -4,7 +4,7 @@ function [ ] = plot_uphi( Tau )
 global phi;
 
 nu = size(Tau,1);
-delete(figure(1));
+
 figure(1);
 subplot(nu, 1, 1);
 
@@ -19,12 +19,11 @@ for i = 1:nu
     subplot(nu, 1, i);hold on;
     
     phi_i = phi(:,i)/max(abs(phi(:,i)));
-    plot(t, 0*t, 'k:')
     plot(t,phi_i, 'b-');
-    plot(t,u(:,i), 'r-');
+    plot(t,u(:,i), 'c-');
+    plot(
     
 end
 hold off;
-pause;
 end
 

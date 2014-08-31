@@ -21,16 +21,19 @@ for j = 1:size(Tau,1) % Dla kazdego sterowania
     % Przy kazdym przelaczeniu zmien sterowanie na przeciwne
     for n = 1:size(Tau,2)
         
-        % Poki nie ma przelaczenia to podtrzymuj sterowanie
-        while (i < nt && t(i) < Tau(j,n))
+        if(i<= nt)
+            
+            % Poki nie ma przelaczenia to podtrzymuj sterowanie
+            while (i < nt && t(i) < Tau(j,n))
+                u(j,i) = u_temp;
+                i = i + 1;
+            end;
+            
+            % Zmien sterowanie na przeciwne
+            u_temp = -u_temp;
             u(j,i) = u_temp;
             i = i + 1;
-        end;
-        
-        % Zmien sterowanie na przeciwne
-        u_temp = -u_temp;
-        u(j,i) = u_temp;
-        i = i + 1;
+        end
     end
 end
 u = u';

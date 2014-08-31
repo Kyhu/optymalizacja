@@ -22,7 +22,7 @@ while(STOP_CONDITION == 0)
     i = i+1
     
     %% Wyznaczenie kierunku poszukiwania`
-    d = H\(-g); % mozliwe ze jest szybszy numerycznie sposob rozwiazaywania tego rownania
+     d = H\(-g); % mozliwe ze jest szybszy numerycznie sposob rozwiazaywania tego rownania
     
     %% Optymalizacja na kierunku
     
@@ -30,7 +30,7 @@ while(STOP_CONDITION == 0)
     opt.fo = qi_value;              % Poczatkowa wartosc
     opt.gradd = d'*g;               % Rzut gradientu na kierunek poszukiwania (musi byc ujemny)
     opt.maxstep = max_step(X, d);   % Maksymalny krok w poszukiwaniu liniowym
-    opt.maxstep = 1000;
+    %opt.maxstep = 1;
     % Wywolanie optymalizacja na kierunku
     [X_next, qi_value] = line_search(qi_fun,X,d,opt,1);
 
@@ -47,11 +47,12 @@ while(STOP_CONDITION == 0)
     H = H_next;
     
     %% Warunki stopu - DO UZUPELNIENIA
-    if(i > 1) 
+    if(i > 100) 
         STOP_CONDITION = 1;
     end
-    %if(abs(norm(g)) < 0.01) STOP_CONDITION = 1;
-    %end
+    if(abs(norm(g)) < 0.1 || abs(norm(z)) < 0.1 || abs(norm(z)) < 0.1) 
+        STOP_CONDITION = 1;
+    end
 end
 
 %% Rezultat

@@ -2,6 +2,7 @@ function [new_Tau] = remove_pins(Tau)
 epsilon = 0.05;
 global T;
 Tau = [Tau, [T;T;T]];
+
 for i = 1:size(Tau,1) % Dla każdego sterowania
    n = 1;
    k = 1;
@@ -16,5 +17,7 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
         end  
     end    
 end
-
-new_Tau(new_Tau == 0) = T;
+if size(new_Tau,1) < 3
+    new_Tau(3,1) = 0.1;
+end
+new_Tau(new_Tau == 0) = T+1;

@@ -56,7 +56,7 @@ while f(1)==min(f) & s(it)>1e-16     % Apr.szeœc.3-punktowa
     else s(it)=-der/denom;end
     f(it)=feval(FUN,s(it),x0,sd,T,varargin{:});
 end
-
+f
 if it==3 & min(s(2:3))>1e-16        % Apr.szeœc.3-punktowa
     sm=min(smax,max(s)+delta);j=1;
     r(3)=(f(3)-f(1)-s(3)*der)/s(3)^2;
