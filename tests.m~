@@ -1,10 +1,9 @@
+clear_all_not_bp;
+
 path('BFGS/', path); % sciezka do BFGSa
 path('line_search/', path); % sciezka do line searcha
 path('quality_index/', path); % sciezka do wskaznika jakosci
 path('model/', path); % sciezka do rownan stanu razem z rk4 i approkysmacja calego przebiegu
-path('utils/', path); % sciezka do pomocnych narzedzi
-
-clear_all_but_bp;
 load_constants;
 
 %% Test rk4 i appro
@@ -13,10 +12,9 @@ load_constants;
 % u = [1 -10 5 20 0 0; 0 1 0 -1 0 0;0 2 5 -5 2 0]; %losowe wsp�czynniki sterowania
 % x0 = [0 0 0 0 0 0 0];  % punk startowy
 % q = 100; % liczba punktow w podprzedziale
+% figure(1);
 %     
 % [t,x] = appr([t0 tn], u, x0, @rhs_SRV, 100);  
-% 
-% figure(1);
 % plot(t,x); 
 
 
@@ -34,39 +32,33 @@ load_constants;
 % fopt % wartosc funkcji po minimalizacji kierunkowej
 
 %% Test BFGSa i line searcha (mimum tych funkcji to 2 i 3);
-% BFGS([35;12], @obj_fun, @obj_fun_grad)
+%BFGS([35;12], @obj_fun, @obj_fun_grad) % Sprawdzic maxstep!
 
-Tau = [20;30;35];
-BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
-
-%% Test calkowanie wstecz
-% Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
-% point_number = 50000;
-% [t, u] = tau2u(Tau);
-% [t,x] = appr([t(1) t(end)], u, x0, @rhs_SRV, 1);  
-% figure(1)
-% plot(strech_vector(t,point_number),strech_vector(x,point_number)); 
-% u = flipud(u); % Obrócenie x bo będziemy calkować w tyl.
-% x_back0 = x(end,:);
-% [t_back,x_back] = appr([t(end) t(1)], u, x_back0, @rhs_SRV, 1);   % Czas obrocony
-% x_back = flipud(x_back);
-% t_back = flipud(t_back);
-% 
+%% Calkowanie wstecz - trzeba tez odkomentowac rk4 i appro - cos w tym nie dziala
+% x = flipud(x); % Obrócenie x bo będziemy calkować w tym.
+% psiT = [-2*x(1,1),-2*x(1,2),-2*x(1,3),-2*x(1,4),-2*x(1,5),-2*x(1,6),-1]; %poczoatkowe/koncowe psi
+% [psit,psi] = appr([tn t0], x', psiT, @psi_rhs_SRV, 1);   % Czas obrocony
+% psi = flipud(psi); % Obracamy do chronologicznej kolejnosci
 % figure(2);
-% plot(strech_vector(t,point_number),strech_vector(x_back,point_number)); 
+% plot(flipud(psit),psi); 
+
+
+% figure(1);
+% plot(tx,x);
 % 
-% qi_prim = qi_x_grad(x);
-% psiT = -qi_prim(end,:); 
-% x = flipud(x); 
-% [psit,psi] = appr([t(end) t(1)], x, psiT, @psi_rhs_SRV, 1);   
-% psi = flipud(psi);
-% psit = flipud(psit);
+% u = fliplr(u); % Obrócenie x bo będziemy calkować w tyl.
+% x00 = x(end,:)
+% [tx,x] = appr([tx(end) tx(1)], u, x00, @rhs_SRV, 1);   % Czas obrocony
+% 
+% x = flipud(x);
+% tx = flipud(tx);
+% 
 % figure(3);
-% plot(strech_vector(t,point_number),strech_vector(psi,point_number));
+% plot(tx,x); 
 
 %% Test funkcji przelaczajacej
 % Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
-% [t,u] = tau2u(Tau);
+% [t,u] = Tau2u(Tau);
 % plot(t,u);
 
 %% Test qi_tau
@@ -74,12 +66,6 @@ BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
 % qi_tau(Tau)
 
 %% Test qi_tau_grad
-%Przykladowe psi
-% global psit psi;
-% load('random_psi.mat')
-% psi = x;
-% psit = tx;
-% clear tx x;
 % Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
 % qi_tau_grad(Tau)
 
@@ -87,7 +73,7 @@ BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
 % Tau = [2,5,7,36, 36.03,46; 7,10,22,22,37,40; 15,16,16.04,24,32,45];
 % remove_pins(Tau)
 
-%% Test generate_switch - do zrobienia
+%% Test generate_switch
 % Tau = [2,5,7,36,46; 7,10,22,37,40; 15,16,24,32,45];
 % generate_switch(Tau)
 

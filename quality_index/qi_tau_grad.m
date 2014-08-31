@@ -1,11 +1,14 @@
 function dq = qi_tau_grad(Tau)
-% Tu gradient funkcji jakosci po zmiennych decyzyjjnych (czyli czasach
+%%Gradient funkcji jakosci po zmiennych decyzyjnych (czyli czasach
 % przelaczen)
+% Wzor na gradient : phi*df/du * delta_u;
+% phi - funkcja przelaczen
+% df/du - pochodna funkcji rhs po sterowaniu
+% delta_u - roznica miedzy wartosciami nowego sterowaniem a starego
+% Na końcu zwracamy wartosc gradientu w punktach przelaczen
 
-global psi;
-global psit;
-global phi;
-global u0;
+% Stale i zmienne globalne
+global psi psit phi u0;
 
 %% Wyliczanie funkcji przelaczen
 % Psi' * f1; f1 = [0;0;0;1;1;1;0] (Czy sterowanie spod całki też?)
@@ -18,7 +21,7 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
     u = u0(i);
     for j = 1:size(Tau,2) % Dla kazdego przelaczenia
         
-        delta_u(i,j) = 2*(-u); % 
+        delta_u(i,j) = 2*(-u); 
         u = -u;
         
     end
@@ -39,6 +42,6 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
     end
 end
 
-%% Wyniki
+%% Wynik
 dq;
 

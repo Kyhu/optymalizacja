@@ -16,7 +16,16 @@ while(~STOP_COND)
     %% BFGS
     [Tau,q] = BFGS(Tau, @qi_tau_wrapper, @qi_tau_grad)
     
-    plot_uphi(Tau);
+    
+    % Wykres funkcji przelaczen i czasow przelaczen
+    % Subplot dla kazdego sterowania
+    % Wyliczenie max phi dla kazdego sterowania
+    figure(9); hold on;
+    [t,u] = tau2u(Tau);    
+    phi = strech_vector(phi, length(t));
+    plot(t,phi, 'm-');
+    plot(t,u);
+    hold off;
     
     
     %% Logika najwyzszego poziomu zarzadzajaca czasami przelaczen    

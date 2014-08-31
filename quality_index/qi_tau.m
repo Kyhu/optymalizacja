@@ -1,47 +1,36 @@
-function q = qi_tau(Tau)   % Czasy przelaczen
+function q = qi_tau(Tau)   
+%%Funkcja jakosci dla zmiennych decyzyjnych - czasow przelaczen
 
-global x0 psi psit; % Start trajektorii
+% Stale i zmienne globalne
+global x0 psi psit; 
 
 % Przeliczanie Tau na u(t)
-[t, u] = Tau2u(Tau);
+[t, u] = tau2u(Tau);
 
 % Wyliczenie trajektorii
 [tx,x] = appr([t(1) t(end)], u, x0, @rhs_SRV, 1);  
 
-% Ocenienie trajektorii
+% Ocenienie trajektorii - funkcja jakosci dla zmiennych stanu w czasie
 q = qi_x(t(end), x);
 
-% Rozwiazywanie rownan sprzezoych
+
+%% Calkowanie wstecz rownan sprzezonych
+% Rownania sprzezone jako zmienne globalne
+
+% Wyznacznie pochodnych funkcji jakości po zmiennych stanu
 qi_prim = qi_x_grad(x);
-psiT = -qi_prim(end,:); % poczatkowe/koncowe psi
-%psiT = [-1,0,1,-1,0,1,0];
 
+% Wyznaczenie granicznego psi - psi(T)
+psiT = -qi_prim(end,:); 
 
-% figure(1);
-% plot(tx,x);
-% 
-% u = fliplr(u); % Obrócenie x bo będziemy calkować w tyl.
-% x00 = x(end,:)
-% [tx,x] = appr([tx(end) tx(1)], u, x00, @rhs_SRV, 1);   % Czas obrocony
-% 
-% x = flipud(x);
-% tx = flipud(tx);
-% 
-% figure(3);
-% plot(tx,x); 
+% Obrócenie x bo będziemy calkować w tyl. X jest 'sterowaniem'
+x = flipud(x); 
 
+% Czas obrocony - calkowanie wstecz rownan sprzezonych
+[psit,psi] = appr([tx(end) tx(1)], x, psiT, @psi_rhs_SRV, 1);   
 
-x = flipud(x); % Obrócenie x bo będziemy calkować w tyl.
-[psit,psi] = appr([tx(end) tx(1)], x', psiT, @psi_rhs_SRV, 1);   % Czas obrocony
-
-% obrocenie macierzy - nie ma znaczenia przy wykresie bo i tak obracamy
-% obydwa
-psi = flipud(psi); % Obracamy do chronologicznej kolejnosci
+% Obrocenie macierzydo chronologicznej kolejnosci
+psi = flipud(psi);
 psit = flipud(psit);
-x = flipud(x);
 
-% figure(1);
-% plot(tx,x); 
-% figure(2);
-% plot(psit,psi); 
 

@@ -7,6 +7,7 @@ syms('x4', 'real')
 syms('x5', 'real')
 syms('x6', 'real')
 syms('x7', 'real')
+syms('T', 'real')
 
 Q = T + lambda*x7 + x1^2 + x2^2 + x3^2 + x4^2 + x5^2 + x6^2;
 

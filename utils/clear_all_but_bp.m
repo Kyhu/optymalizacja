@@ -1,16 +1,18 @@
-%# store breakpoints
+%% Zapisuje breakpointy, czysci tymczasowe dane, wczytuje breakpointy
+
+% Zapisz breakpoimtu
 tmp = dbstatus;
 save('tmp.mat','tmp')
 
-%# clear all
+% clear all
 close all
 clear classes %# clears even more than clear all
-clc
+%clc
 
-%# reload breakpoints
+% Wczytaj breakpointy
 load('tmp.mat')
 dbstop(tmp)
 
-%# clean up
+% clean up
 clear tmp
 delete('tmp.mat')
