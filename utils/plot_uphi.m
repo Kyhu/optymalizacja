@@ -25,6 +25,5 @@ for i = 1:nu
     
 end
 hold off;
-pause;
 end
 

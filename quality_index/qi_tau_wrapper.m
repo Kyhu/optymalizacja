@@ -4,6 +4,6 @@ function [ q ] = qi_tau_wrapper(s,x0,sd,T)
 
 x=x0+s*sd;
 Tau = reshape(x,3,[]);
-q = qi_tau(Tau);
+[q,~,~] = qi_tau(Tau);
 end
 

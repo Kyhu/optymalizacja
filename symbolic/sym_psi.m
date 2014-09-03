@@ -35,7 +35,7 @@ f3 = x6
 f4 = 2*x5 + (1+x1)*(1-r_mod_3) + a1
 f5 = -2*x4 + x2*(1-r_mod_3) + a2
 f6 = -x3*r_mod_3 + a3
-f7 = sqrt(a1^2 + a2^2 + a3^2);
+f7 = a1^2 + a2^2 + a3^2;
 
 H = psi1 * f1 + psi2 * f2 + psi3*f3 + psi4*f4 + psi5*f5 + psi6*f6 + psi7*f7
 

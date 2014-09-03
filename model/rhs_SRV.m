@@ -28,4 +28,4 @@ dx(4) = 2*x(5) + (1+x(1))*(1-abs_r_3) + a(1);
 dx(5) = -2*x(4) + x(2)*(1-abs_r_3) + a(2);
 dx(6) = -x(3)*abs_r_3 + a(3);
 % Dodatkowa zmienna - całka wycięta ze współczynnika jakości
-dx(7) = sqrt(a(1)^2 + a(2)^2 + a(3)^2);  
+dx(7) = a(1)^2 + a(2)^2 + a(3)^2;  

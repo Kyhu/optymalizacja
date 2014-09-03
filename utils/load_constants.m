@@ -1,6 +1,4 @@
 %% Zmienne globalne
-global psi;     % Przebieg rownan sprzezonych
-global psit;    % Czas do przebiegu rownan sprezonych
 global phi;     % Funkcja przelaczen
 
 %% Parametry
@@ -30,7 +28,7 @@ F = 2000;
 
 % Liczba punktow czasowych miedzy 0 a T
 global nt;
-nt = 2000;
+nt = 500;
 
 % Poczatkowy stan obiektu
 global x0;

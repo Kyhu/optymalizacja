@@ -28,13 +28,13 @@ while(~STOP_COND)
     % Jesli Tau(n+1) == Tau(n) == Tau(n-1)(Z jakimś przyblizeniem) to
     % zamienic na jedno przelacenie itp
     
-    Tau = remove_pins(Tau)
+    %Tau = remove_pins(Tau)
     
     % Tworzenie szpilek w miejscach gdzie phi*u jest najmniejsze    
     Tau = generate_switch(Tau)
-    plot_uphi(Tau);
+    %plot_uphi(Tau);
     
-    if(n > 3) 
+    if(n > 1) 
         STOP_COND = 1;
     end
 end

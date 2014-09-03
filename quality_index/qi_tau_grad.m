@@ -7,13 +7,20 @@ function dq = qi_tau_grad(Tau_vec)
 % delta_u - roznica miedzy wartosciami nowego sterowaniem a starego
 % Na końcu zwracamy wartosc gradientu w punktach przelaczen
 
+% Złożenie Tau
 Tau = reshape(Tau_vec,3,[]);
 
+% Wyliczenie trajektorii stanu
+[~,tx,x] = qi_tau(Tau);
+
+% Całkowanie wstecz psi
+[psit, psi] = psi_int(tx, x);
+
 % Stale i zmienne globalne
-global psi psit phi u0;
+global phi u0;
 
 %% Wyliczanie funkcji przelaczen
-% Psi' * f1; f1 = [0;0;0;1;1;1;0] (Czy sterowanie spod całki też?)
+% Psi' * f1;
 phi = [-psi(:,4), -psi(:,5), -psi(:,6)];
 
 %% Wyliczanie delta u
@@ -23,14 +30,14 @@ for i = 1:size(Tau,1) % Dla każdego sterowania
     u = u0(i);
     for j = 1:size(Tau,2) % Dla kazdego przelaczenia
         
-        delta_u(i,j) = 2*(-u); 
+        delta_u(i,j) = 2*(u); % -2*u ?
         u = -u;
         
     end
 end
 
 %% Wyliczenie pochodnych na calej osi
-grad = -phi*delta_u;
+grad = phi*delta_u;
 
 %% Znalezienie Tau w wektorach czasu
 dq = zeros(size(Tau));
